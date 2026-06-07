@@ -235,3 +235,47 @@ footer { border-top: 1px solid var(--line-soft); padding: 34px 0; margin-top: 40
 
 /* table wrapper */
 .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); }
+
+/* ---------- nav GitHub star button (SDK convention) ---------- */
+.nav-star { display: inline-flex; align-items: center; gap: 8px; color: var(--text) !important;
+            border: 1px solid var(--line); padding: 6px 11px; border-radius: 8px;
+            font: 600 13px/1 var(--sans); }
+.nav-star:hover { border-color: var(--accent); background: rgba(110,168,254,.08); }
+.nav-star svg { width: 15px; height: 15px; fill: currentColor; }
+.nav-star .count { color: var(--faint); font-family: var(--mono); font-size: 12px;
+                   border-left: 1px solid var(--line); padding-left: 8px; }
+
+/* ---------- "works with" ecosystem strip ---------- */
+.providers { border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft);
+             background: var(--bg-soft); }
+.providers .wrap { display: flex; align-items: center; gap: 14px 30px; flex-wrap: wrap;
+                   padding: 22px 24px; justify-content: center; }
+.providers .label { color: var(--faint); font: 600 11px/1 var(--mono);
+                    text-transform: uppercase; letter-spacing: .12em; }
+.providers .item { color: var(--muted); font: 600 15px/1 var(--sans); }
+.providers .item:hover { color: var(--text); }
+.providers .item.code { font-family: var(--mono); font-size: 13.5px; color: var(--cyan); }
+
+/* ---------- numbered feature cards ---------- */
+.fnum { position: absolute; top: 18px; right: 18px; font: 700 12px/1 var(--mono);
+        color: var(--faint); opacity: .55; }
+
+/* ---------- free & open source band ---------- */
+.oss .card { background: linear-gradient(180deg, var(--card), var(--card-2));
+             border: 1px solid var(--line); border-radius: 18px; padding: 52px 24px; text-align: center; }
+.oss h2 { font-size: clamp(24px, 3.4vw, 33px); margin: 0 0 12px; font-weight: 800; letter-spacing: -.02em; }
+.oss p { color: var(--muted); margin: 0 auto; max-width: 540px; font-size: 17px; }
+.oss .badges { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 22px; }
+.oss .badge2 { font: 600 13px/1 var(--mono); color: var(--muted); border: 1px solid var(--line);
+               border-radius: 999px; padding: 8px 14px; }
+.oss .badge2 b { color: var(--text); }
+
+/* ---------- changelog ---------- */
+.changelog-list { max-width: 680px; margin: 0 auto; }
+.rel { display: flex; gap: 18px; padding: 16px 2px; border-bottom: 1px solid var(--line-soft); }
+.rel:last-child { border-bottom: 0; }
+.rel .tag { flex: 0 0 auto; font: 700 13px/1 var(--mono); color: var(--accent);
+            background: rgba(110,168,254,.1); border: 1px solid rgba(110,168,254,.22);
+            border-radius: 7px; padding: 6px 9px; height: fit-content; }
+.rel .what { color: var(--muted); font-size: 14.5px; }
+.rel .what b { color: var(--text); }

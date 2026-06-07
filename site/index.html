@@ -23,7 +23,12 @@
         <a href="#showcase">Showcase</a>
         <a href="#why">Why</a>
         <a href="docs.html">Docs</a>
-        <a class="nav-cta" href="https://github.com" target="_blank" rel="noopener">GitHub ↗</a>
+        <!-- swap your-org/agentlens for the real repo; replace .count with a live
+             shields.io badge once the repo is public if you want an auto-updating star count -->
+        <a class="nav-star" href="https://github.com/your-org/agentlens" target="_blank" rel="noopener" aria-label="Star on GitHub">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          Star <span class="count">★</span>
+        </a>
       </div>
     </div>
   </nav>
@@ -47,8 +52,8 @@
         </div>
 
         <div class="hero-actions">
-          <a class="btn btn-primary" href="docs.html">Get started →</a>
-          <a class="btn btn-ghost" href="#showcase">See it in code</a>
+          <a class="btn btn-primary" href="docs.html#quickstart">Get started →</a>
+          <a class="btn btn-ghost" href="docs.html">Documentation</a>
         </div>
 
         <div class="trust">
@@ -80,6 +85,18 @@ generate_html(tracer.trace, open_browser=True)</code></pre>
     </div>
   </header>
 
+  <!-- WORKS WITH -->
+  <div class="providers">
+    <div class="wrap">
+      <span class="label">Works with</span>
+      <span class="item">Anthropic</span>
+      <span class="item">OpenAI</span>
+      <span class="item">LangChain</span>
+      <span class="item">LlamaIndex</span>
+      <span class="item code">any Python callable</span>
+    </div>
+  </div>
+
   <!-- FEATURES -->
   <section id="features">
     <div class="wrap">
@@ -91,31 +108,37 @@ generate_html(tracer.trace, open_browser=True)</code></pre>
 
       <div class="features">
         <div class="feature">
+          <span class="fnum">01</span>
           <div class="ico">🧭</div>
           <h3>Step-by-step tracing</h3>
           <p>Record thoughts, tool calls, tokens, latency and errors with a single <code>with tracer.step()</code>. Latency is timed for you.</p>
         </div>
         <div class="feature">
+          <span class="fnum">02</span>
           <div class="ico">🔁</div>
           <h3>Loop detection</h3>
           <p>Automatically flags when the agent gets stuck calling the same tool with the same args — the classic token-burning failure mode.</p>
         </div>
         <div class="feature">
+          <span class="fnum">03</span>
           <div class="ico">📄</div>
           <h3>Self-contained HTML</h3>
           <p>One <code>generate_html()</code> call produces a beautiful, shareable report. No server, no database, no account.</p>
         </div>
         <div class="feature">
+          <span class="fnum">04</span>
           <div class="ico">✅</div>
           <h3>Deterministic metrics</h3>
           <p><code>Contains</code>, <code>ToolWasCalled</code>, <code>MaxSteps</code>, <code>NoLoops</code> and more. Fast, free, reproducible — no flaky evals.</p>
         </div>
         <div class="feature">
+          <span class="fnum">05</span>
           <div class="ico">⚖️</div>
           <h3>LLM-as-judge</h3>
           <p>Opt-in <code>LLMJudge("criteria")</code> grades open-ended output with Claude. The <i>only</i> metric that costs tokens.</p>
         </div>
         <div class="feature">
+          <span class="fnum">06</span>
           <div class="ico">🧪</div>
           <h3>CI-native</h3>
           <p>Run evals as pytest rows and gate PRs: <code>report.assert_passed(0.9)</code>. One named test per case.</p>
@@ -301,6 +324,47 @@ generate_html(tracer.trace, open_browser=True)</code></pre>
     </div>
   </section>
 
+  <!-- FREE & OPEN SOURCE -->
+  <section class="oss">
+    <div class="wrap">
+      <div class="card">
+        <h2>Free &amp; open source</h2>
+        <p>The core is stdlib-only and MIT-licensed. Nothing to host, no account, no telemetry. Your traces stay on your machine.</p>
+        <div class="badges">
+          <span class="badge2"><b>MIT</b> licensed</span>
+          <span class="badge2"><b>0</b> dependencies</span>
+          <span class="badge2"><b>no</b> backend</span>
+          <span class="badge2"><b>Python</b> 3.10+</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHANGELOG -->
+  <section style="padding-top:30px">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Moving fast</div>
+        <h2>Changelog</h2>
+        <p>Built in the open. Recent releases:</p>
+      </div>
+      <div class="changelog-list">
+        <div class="rel">
+          <span class="tag">v0.3</span>
+          <span class="what"><b>LLM-as-judge.</b> Opt-in <code style="font-family:var(--mono)">LLMJudge("criteria")</code> grades open-ended output with Claude via structured outputs — the only metric that costs tokens.</span>
+        </div>
+        <div class="rel">
+          <span class="tag">v0.2</span>
+          <span class="what"><b>Eval layer + CI.</b> Deterministic metrics, an <code style="font-family:var(--mono)">Eval</code>/<code style="font-family:var(--mono)">Case</code> runner with <code style="font-family:var(--mono)">pass_rate</code>, pytest integration (one row per case), and an HTML eval report.</span>
+        </div>
+        <div class="rel">
+          <span class="tag">v0.1</span>
+          <span class="what"><b>Observability core.</b> Step tracing, loop detection, and a self-contained HTML trace report. Stdlib-only.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- CTA -->
   <section>
     <div class="wrap">
@@ -308,8 +372,8 @@ generate_html(tracer.trace, open_browser=True)</code></pre>
         <h2>Trace your first agent in 5 minutes</h2>
         <p>No account. No backend. Just <code>pip install</code> and a few lines.</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="docs.html">Get started →</a>
-          <a class="btn btn-ghost" href="https://github.com" target="_blank" rel="noopener">Star on GitHub ↗</a>
+          <a class="btn btn-primary" href="docs.html#quickstart">Get started →</a>
+          <a class="btn btn-ghost" href="https://github.com/your-org/agentlens" target="_blank" rel="noopener">Star on GitHub ↗</a>
         </div>
       </div>
     </div>
