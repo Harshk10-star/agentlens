@@ -7,7 +7,8 @@ errors — automatically detect when it gets **stuck in a loop**, and render the
 whole run to a self-contained **HTML report**. No backend, no account, no cloud.
 The core is **stdlib-only**.
 
-> Working name. Easy to rename.
+> On PyPI as [`agentlens-eval`](https://pypi.org/project/agentlens-eval/) (the
+> bare `agentlens` name was taken); imports as `agentlens_eval`.
 
 **Site:** a static landing page + docs live in [`site/`](site/) — open
 `site/index.html` in a browser (no build step).
@@ -19,7 +20,13 @@ happen mid-run, or (b) require a hosted dashboard (Postgres + ClickHouse, an
 account, a cloud). `agentlens` is the opposite: **one trace object, many
 lenses**, running entirely on your laptop.
 
-## Install (dev)
+## Install
+
+```bash
+pip install agentlens-eval        # then: import agentlens_eval
+```
+
+Or from source, for development:
 
 ```bash
 pip install -e .
