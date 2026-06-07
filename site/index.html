@@ -4,23 +4,27 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>agentlens — local-first observability + evals for AI agents</title>
-  <meta name="description" content="Trace every step your AI agent takes, catch stuck loops, and score its behavior — then open it all as an HTML report. Stdlib-only, no backend, framework-agnostic." />
+  <meta name="description" content="Trace every step your AI agent takes in development, CI, or production, catch stuck loops, and score behavior — then open it all as an HTML report. Stdlib-only, no vendor backend, framework-agnostic." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 </head>
 <body>
 
-  <div class="bgfx" aria-hidden="true"><span class="b1"></span><span class="b2"></span><span class="b3"></span></div>
+  <canvas class="matrix" aria-hidden="true"></canvas>
 
   <!-- NAV -->
   <nav class="nav">
     <div class="wrap nav-inner">
       <a class="brand" href="index.html">
-        agentlens <span class="prmpt">~$</span> <span class="ver">v0.3</span>
+        agentlens <span class="prmpt">~$</span>
       </a>
       <button class="nav-toggle" aria-label="Menu">~/</button>
       <div class="nav-links">
+        <a href="#output">output</a>
         <a href="#features">features</a>
         <a href="#showcase">showcase</a>
         <a href="#why">why</a>
@@ -36,6 +40,27 @@
   <!-- HERO -->
   <header class="hero">
     <div class="wrap">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="prompt">$</span> inspect agent runs locally</p>
+        <h1>agentlens</h1>
+        <p class="hero-lede">Trace every step your AI agent takes in development, CI, or production. Catch stuck loops, score behavior, and keep a local record of what happened when a run goes sideways.</p>
+        <div class="hero-meta" aria-label="Project highlights">
+          <span>stdlib-only</span>
+          <span>self-contained reports</span>
+          <span>pytest-ready evals</span>
+          <span>no vendor backend</span>
+        </div>
+      </div>
+
+      <div class="hero-actions">
+        <div class="install">
+          <span class="prompt">$</span><code id="install-cmd">pip install agentlens</code>
+          <button class="copy-btn" data-copy="#install-cmd">copy</button>
+        </div>
+        <a class="btn btn-primary" href="docs.html#quickstart">get_started()</a>
+        <a class="btn btn-ghost" href="docs.html">read_docs()</a>
+      </div>
+
       <div class="editor">
         <div class="editor-bar">
           <span class="etab active">agentlens.py</span>
@@ -56,15 +81,6 @@
 <span class="ln">report <span class="t-k">=</span> <span class="t-f">Eval</span>(<span class="t-s">"my-agent"</span>, agent).<span class="t-f">run</span>(dataset)  <span class="t-c"># → pass_rate</span></span>
         </div>
       </div>
-
-      <div class="hero-actions">
-        <div class="install">
-          <span class="prompt">$</span><code id="install-cmd">pip install agentlens</code>
-          <button class="copy-btn" data-copy="#install-cmd">copy</button>
-        </div>
-        <a class="btn btn-primary" href="docs.html#quickstart">get_started()</a>
-        <a class="btn btn-ghost" href="docs.html">read_docs()</a>
-      </div>
     </div>
   </header>
 
@@ -75,6 +91,70 @@
     </div>
   </section>
 
+  <!-- OUTPUT -->
+  <section id="output" class="output">
+    <div class="wrap">
+      <div class="sec-head"><span class="hash">#</span> <span class="label">output</span> <span class="rule"></span></div>
+      <p class="sec-sub"># the thing agentlens writes for you: one local HTML file, no server required</p>
+
+      <div class="output-grid">
+        <div class="run-card">
+          <div class="term-bar"><span class="ttl">powershell - local run</span></div>
+          <div class="term-body">
+            <div><span class="pr">$</span> python example_my_agent.py</div>
+            <div class="out">trace: smoke-agent</div>
+            <div class="out">steps: 2  tokens: 22  errors: 0</div>
+            <div class="out">warning: search repeated at steps 1, 2</div>
+            <div class="out">wrote: report.html</div>
+            <div><span class="pr">$</span> start report.html<span class="cursor"></span></div>
+          </div>
+          <div class="artifact-list" aria-label="Where the same output helps">
+            <div class="artifact-row"><b>dev</b><span>open the report while debugging a run</span></div>
+            <div class="artifact-row"><b>ci</b><span>fail a build when evals miss the bar</span></div>
+            <div class="artifact-row"><b>prod</b><span>save the report when a live run misbehaves</span></div>
+            <p class="artifact-note">The core output is still just a local Trace plus HTML. No hosted dashboard is required.</p>
+          </div>
+        </div>
+
+        <div class="report-preview" aria-label="Generated HTML trace report preview">
+          <div class="report-top">
+            <div>
+              <h3>smoke-agent</h3>
+              <p>agentlens trace report</p>
+            </div>
+            <span class="report-file">report.html</span>
+          </div>
+
+          <div class="report-stats">
+            <div class="report-stat"><b>2</b><span>steps</span></div>
+            <div class="report-stat"><b>22</b><span>tokens</span></div>
+            <div class="report-stat"><b>18</b><span>ms total</span></div>
+            <div class="report-stat"><b>0</b><span>errors</span></div>
+          </div>
+
+          <div class="report-section">Loop detection</div>
+          <div class="report-warn">
+            <span>ERROR</span>
+            <p><code>search</code> called 2x in a row with identical args {"q": "weather"} (steps 1, 2) — likely stuck in a loop</p>
+          </div>
+
+          <div class="report-section">Timeline</div>
+          <div class="report-step looped">
+            <div class="step-head"><b>Step 1</b><span>10 tok · 8 ms</span></div>
+            <div class="thought">first lookup</div>
+            <div class="tool-line">tool: search</div>
+            <pre>{"q": "weather"}</pre>
+          </div>
+          <div class="report-step looped">
+            <div class="step-head"><b>Step 2</b><span>12 tok · 10 ms</span></div>
+            <div class="thought">retry same lookup</div>
+            <div class="tool-line">result: answer for weather</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- FEATURES -->
   <section id="features">
     <div class="wrap">
@@ -82,36 +162,33 @@
       <p class="sec-sub"># one Trace, many lenses — every feature reads the same run object</p>
 
       <div class="features">
-        <div class="feature">
-          <div class="top"># 01 · observability</div>
-          <h3><span class="fn">tracer.step</span><span class="pa">()</span></h3>
-          <p>Record thoughts, tool calls, tokens, latency and errors per turn. Latency is timed for you.</p>
-        </div>
-        <div class="feature">
-          <div class="top"># 02 · observability</div>
-          <h3><span class="fn">detect_loops</span><span class="pa">(trace)</span></h3>
-          <p>Flags when the agent gets stuck calling the same tool with the same args — the classic token sink.</p>
-        </div>
-        <div class="feature">
-          <div class="top"># 03 · observability</div>
-          <h3><span class="fn">generate_html</span><span class="pa">(trace)</span></h3>
-          <p>One call → a self-contained report.html. Timeline, cost, loop warnings. No server, no database.</p>
-        </div>
-        <div class="feature">
-          <div class="top"># 04 · evaluation</div>
-          <h3><span class="fn">metrics</span><span class="pa">.*</span></h3>
-          <p><span class="cmt">Contains, ToolWasCalled, MaxSteps, NoLoops…</span> deterministic, free, reproducible. No flaky evals.</p>
-        </div>
-        <div class="feature">
-          <div class="top"># 05 · evaluation</div>
-          <h3><span class="fn">metrics.LLMJudge</span><span class="pa">(...)</span></h3>
-          <p>Opt-in LLM-as-judge for open-ended output, graded by Claude. The only metric that costs tokens.</p>
-        </div>
-        <div class="feature">
-          <div class="top"># 06 · ci</div>
-          <h3><span class="fn">report.assert_passed</span><span class="pa">()</span></h3>
-          <p>Run evals as pytest rows and gate PRs on <span class="cmt">pass_rate</span>. One named test per case.</p>
-        </div>
+        <article class="feature">
+          <div class="top">01 / trace</div>
+          <h3><span class="fn">see the run</span></h3>
+          <p>Record each turn with tool calls, tokens, latency, final output, and errors in one local trace.</p>
+          <ul class="api-list">
+            <li><code>tracer.step()</code></li>
+            <li><code>generate_html(trace)</code></li>
+          </ul>
+        </article>
+        <article class="feature">
+          <div class="top">02 / detect</div>
+          <h3><span class="fn">catch loops</span></h3>
+          <p>Flag repeated tool calls and token sinks before they become invisible cost or flaky behavior.</p>
+          <ul class="api-list">
+            <li><code>detect_loops(trace)</code></li>
+            <li><code>metrics.NoLoops()</code></li>
+          </ul>
+        </article>
+        <article class="feature">
+          <div class="top">03 / evaluate</div>
+          <h3><span class="fn">gate behavior</span></h3>
+          <p>Run deterministic metrics, optional LLM judging, and pytest rows against the same trace object.</p>
+          <ul class="api-list">
+            <li><code>Eval(...).run(dataset)</code></li>
+            <li><code>report.assert_passed()</code></li>
+          </ul>
+        </article>
       </div>
     </div>
   </section>
