@@ -1,0 +1,20 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "agentlens"
+version = "0.1.0"
+description = "Local-first observability + eval for AI agents: trace runs, detect loops, render an HTML report. No backend."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "harsh" }]
+keywords = ["ai", "agents", "llm", "eval", "observability", "tracing"]
+dependencies = []  # stdlib-only core — that's the point
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["agentlens"]
