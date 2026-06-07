@@ -44,21 +44,37 @@ Or just run the demo:
 python example.py   # writes report.html
 ```
 
-## What's in the box (v0.1)
+## What's in the box (v0.2)
 
 - **Tracing** — `Tracer` / `Step` / `Trace`; latency timed automatically.
 - **Loop detection** — consecutive and frequent repeated tool calls.
-- **HTML report** — timeline, per-step tool calls, totals, loop warnings.
+- **HTML trace report** — timeline, per-step tool calls, totals, loop warnings.
+- **Eval layer** — cheap, deterministic metrics (`Contains`, `Regex`, `Equals`,
+  `ToolWasCalled`, `MaxSteps`, `MaxTokens`, `NoErrors`, `NoLoops`) plus an
+  `Eval` / `Case` runner that produces a `pass_rate` you can gate CI on, and an
+  HTML eval report with per-case pass/fail.
+
+```python
+from agentlens import Eval, Case, metrics
+
+report = Eval("my-agent", my_agent).run([
+    Case("weather in NYC", [metrics.Contains("72"), metrics.ToolWasCalled("get_weather")]),
+])
+report.summary()
+assert report.pass_rate == 1.0   # CI gate
+```
+
+See `example_eval.py` for a full dataset.
 
 ## Roadmap
 
 The whole design is layers over the same `Trace`:
 
-- **Eval layer** — assertion metrics (`Contains`, `Regex`, `ToolWasCalled`),
-  opt-in `LLMJudge`, expected-trajectory matching.
-- **Agent checks** — premature termination, runaway cost/steps, plan drift.
+- **LLM-as-judge** — opt-in `LLMJudge` metric for open-ended outputs.
+- **More agent checks** — premature termination, plan drift, expected-trajectory match.
 - **Dev UX** — `pytest` integration, JSON export + run-to-run diff, framework
-  adapters (raw callable, Anthropic, OpenAI, LangChain).
+  adapters (raw callable, Anthropic, OpenAI, LangChain), `agentlens.wrap(client)`
+  one-line auto-capture.
 
 ## License
 
