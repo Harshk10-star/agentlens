@@ -6,7 +6,7 @@
   <title>agentlens — local-first observability + evals for AI agents</title>
   <meta name="description" content="Trace every step your AI agent takes, catch stuck loops, and score its behavior — then open it all as an HTML report. Stdlib-only, no backend, framework-agnostic." />
   <link rel="stylesheet" href="assets/style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark-dimmed.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 </head>
 <body>
@@ -15,19 +15,17 @@
   <nav class="nav">
     <div class="wrap nav-inner">
       <a class="brand" href="index.html">
-        <span class="logo">🔎</span> agentlens <span class="ver">v0.3</span>
+        <span class="logo">🔎</span> agentlens <span class="prmpt">~$</span> <span class="ver">v0.3</span>
       </a>
-      <button class="nav-toggle" aria-label="Menu">☰</button>
+      <button class="nav-toggle" aria-label="Menu">~/</button>
       <div class="nav-links">
-        <a href="#features">Features</a>
-        <a href="#showcase">Showcase</a>
-        <a href="#why">Why</a>
-        <a href="docs.html">Docs</a>
-        <!-- swap your-org/agentlens for the real repo; replace .count with a live
-             shields.io badge once the repo is public if you want an auto-updating star count -->
+        <a href="#features">features</a>
+        <a href="#showcase">showcase</a>
+        <a href="#why">why</a>
+        <a href="docs.html">docs</a>
         <a class="nav-star" href="https://github.com/your-org/agentlens" target="_blank" rel="noopener" aria-label="Star on GitHub">
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-          Star <span class="count">★</span>
+          star <span class="count">★</span>
         </a>
       </div>
     </div>
@@ -35,140 +33,105 @@
 
   <!-- HERO -->
   <header class="hero">
-    <div class="wrap hero-grid">
-      <div>
-        <span class="pill"><span class="dot"></span> v0.3 · stdlib-only · no backend</span>
-        <h1>See what your agent<br /><span class="grad">actually did.</span></h1>
-        <p class="lead">
-          Local-first <b>observability + evals</b> for AI agents. Trace every step,
-          catch stuck loops, and score behavior — then open it all as a self-contained
-          HTML report. No account, no cloud, no ClickHouse.
-        </p>
-
-        <div class="install">
-          <span class="prompt">$</span>
-          <code id="install-cmd">pip install agentlens</code>
-          <button class="copy-btn" data-copy="#install-cmd">copy</button>
+    <div class="wrap">
+      <div class="editor">
+        <div class="editor-bar">
+          <span class="dots"><i></i><i></i><i></i></span>
+          <span class="etab active">agentlens.py</span>
+          <span class="etab">README.md</span>
         </div>
-
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="docs.html#quickstart">Get started →</a>
-          <a class="btn btn-ghost" href="docs.html">Documentation</a>
-        </div>
-
-        <div class="trust">
-          <span><span class="ok">✓</span> zero dependencies</span>
-          <span><span class="ok">✓</span> framework-agnostic</span>
-          <span><span class="ok">✓</span> cheap &amp; deterministic by default</span>
+        <div class="code">
+<span class="ln"><span class="t-s">"""</span></span>
+<span class="ln"><span class="t-s">agentlens — see what your agent actually did.</span></span>
+<span class="ln blank"></span>
+<span class="ln"><span class="t-s">local-first observability + evals for AI agents.</span></span>
+<span class="ln"><span class="t-s">trace every step · catch stuck loops · score behavior.</span></span>
+<span class="ln"><span class="t-s">no backend · no account · stdlib-only.</span></span>
+<span class="ln"><span class="t-s">"""</span></span>
+<span class="ln blank"></span>
+<span class="ln"><span class="t-k">from</span> agentlens <span class="t-k">import</span> <span class="t-b">Tracer</span>, <span class="t-b">Eval</span>, <span class="t-b">metrics</span></span>
+<span class="ln blank"></span>
+<span class="ln">tracer <span class="t-k">=</span> <span class="t-f">Tracer</span>(<span class="t-s">"my-agent"</span>)            <span class="t-c"># one Trace, many lenses</span></span>
+<span class="ln">report <span class="t-k">=</span> <span class="t-f">Eval</span>(<span class="t-s">"my-agent"</span>, agent).<span class="t-f">run</span>(dataset)  <span class="t-c"># → pass_rate</span></span>
         </div>
       </div>
 
-      <!-- hero code window -->
-      <div class="window">
-        <div class="window-bar">
-          <span class="dots"><i></i><i></i><i></i></span>
-          <span class="fname">agent.py</span>
+      <div class="hero-actions">
+        <div class="install">
+          <span class="prompt">$</span><code id="install-cmd">pip install agentlens</code>
+          <button class="copy-btn" data-copy="#install-cmd">copy</button>
         </div>
-<pre><code class="language-python">from agentlens import Tracer, detect_loops
-from agentlens.report import generate_html
-
-tracer = Tracer("support-agent")
-
-# wrap each turn of your existing loop — that's it
-with tracer.step("look up the weather") as step:
-    step.tool_call("get_weather", {"city": "NYC"},
-                   result="72F", tokens=120)
-
-# open report.html — timeline, cost, loop warnings
-generate_html(tracer.trace, open_browser=True)</code></pre>
+        <a class="btn btn-primary" href="docs.html#quickstart">get_started()</a>
+        <a class="btn btn-ghost" href="docs.html">read_docs()</a>
       </div>
     </div>
   </header>
 
   <!-- WORKS WITH -->
-  <div class="providers">
+  <section class="providers" style="padding-top:14px">
     <div class="wrap">
-      <span class="label">Works with</span>
-      <span class="item">Anthropic</span>
-      <span class="item">OpenAI</span>
-      <span class="item">LangChain</span>
-      <span class="item">LlamaIndex</span>
-      <span class="item code">any Python callable</span>
+      <div class="row"><span class="k">from</span> your_stack <span class="k">import</span> <span class="b">Anthropic</span>, <span class="b">OpenAI</span>, <span class="b">LangChain</span>, <span class="b">LlamaIndex</span>  <span class="p"># or</span> <span class="s">"any python callable"</span></div>
     </div>
-  </div>
+  </section>
 
   <!-- FEATURES -->
   <section id="features">
     <div class="wrap">
-      <div class="section-head">
-        <div class="eyebrow">One trace, many lenses</div>
-        <h2>Everything reads the same run</h2>
-        <p>Capture the agent run once. Then point any lens at it — loop detection, metrics, an LLM judge, a report. Each feature is additive, never a rewrite.</p>
-      </div>
+      <div class="sec-head"><span class="hash">#</span> <span class="label">features</span> <span class="rule"></span></div>
+      <p class="sec-sub"># one Trace, many lenses — every feature reads the same run object</p>
 
       <div class="features">
         <div class="feature">
-          <span class="fnum">01</span>
-          <div class="ico">🧭</div>
-          <h3>Step-by-step tracing</h3>
-          <p>Record thoughts, tool calls, tokens, latency and errors with a single <code>with tracer.step()</code>. Latency is timed for you.</p>
+          <div class="top"># 01 · observability</div>
+          <h3><span class="fn">tracer.step</span><span class="pa">()</span></h3>
+          <p>Record thoughts, tool calls, tokens, latency and errors per turn. Latency is timed for you.</p>
         </div>
         <div class="feature">
-          <span class="fnum">02</span>
-          <div class="ico">🔁</div>
-          <h3>Loop detection</h3>
-          <p>Automatically flags when the agent gets stuck calling the same tool with the same args — the classic token-burning failure mode.</p>
+          <div class="top"># 02 · observability</div>
+          <h3><span class="fn">detect_loops</span><span class="pa">(trace)</span></h3>
+          <p>Flags when the agent gets stuck calling the same tool with the same args — the classic token sink.</p>
         </div>
         <div class="feature">
-          <span class="fnum">03</span>
-          <div class="ico">📄</div>
-          <h3>Self-contained HTML</h3>
-          <p>One <code>generate_html()</code> call produces a beautiful, shareable report. No server, no database, no account.</p>
+          <div class="top"># 03 · observability</div>
+          <h3><span class="fn">generate_html</span><span class="pa">(trace)</span></h3>
+          <p>One call → a self-contained report.html. Timeline, cost, loop warnings. No server, no database.</p>
         </div>
         <div class="feature">
-          <span class="fnum">04</span>
-          <div class="ico">✅</div>
-          <h3>Deterministic metrics</h3>
-          <p><code>Contains</code>, <code>ToolWasCalled</code>, <code>MaxSteps</code>, <code>NoLoops</code> and more. Fast, free, reproducible — no flaky evals.</p>
+          <div class="top"># 04 · evaluation</div>
+          <h3><span class="fn">metrics</span><span class="pa">.*</span></h3>
+          <p><span class="cmt">Contains, ToolWasCalled, MaxSteps, NoLoops…</span> deterministic, free, reproducible. No flaky evals.</p>
         </div>
         <div class="feature">
-          <span class="fnum">05</span>
-          <div class="ico">⚖️</div>
-          <h3>LLM-as-judge</h3>
-          <p>Opt-in <code>LLMJudge("criteria")</code> grades open-ended output with Claude. The <i>only</i> metric that costs tokens.</p>
+          <div class="top"># 05 · evaluation</div>
+          <h3><span class="fn">metrics.LLMJudge</span><span class="pa">(...)</span></h3>
+          <p>Opt-in LLM-as-judge for open-ended output, graded by Claude. The only metric that costs tokens.</p>
         </div>
         <div class="feature">
-          <span class="fnum">06</span>
-          <div class="ico">🧪</div>
-          <h3>CI-native</h3>
-          <p>Run evals as pytest rows and gate PRs: <code>report.assert_passed(0.9)</code>. One named test per case.</p>
+          <div class="top"># 06 · ci</div>
+          <h3><span class="fn">report.assert_passed</span><span class="pa">()</span></h3>
+          <p>Run evals as pytest rows and gate PRs on <span class="cmt">pass_rate</span>. One named test per case.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- SHOWCASE -->
-  <section id="showcase" style="padding-top:30px">
+  <section id="showcase" class="showcase">
     <div class="wrap">
-      <div class="section-head">
-        <div class="eyebrow">Show, don't tell</div>
-        <h2>From a loop to a graded report</h2>
-        <p>The integration is a few lines woven into the loop you already have. agentlens only observes — it never drives your agent.</p>
-      </div>
+      <div class="sec-head"><span class="hash">#</span> <span class="label">showcase</span> <span class="rule"></span></div>
+      <p class="sec-sub"># a few lines woven into the loop you already have — agentlens only observes, never drives</p>
 
       <div data-tabs>
         <div class="tabs">
-          <button class="tab active" data-panel="p-trace">trace</button>
-          <button class="tab" data-panel="p-eval">eval</button>
-          <button class="tab" data-panel="p-pytest">pytest</button>
-          <button class="tab" data-panel="p-judge">llm judge</button>
-          <button class="tab" data-panel="p-claude">claude</button>
+          <button class="tab active" data-panel="p-trace">trace.py</button>
+          <button class="tab" data-panel="p-eval">eval.py</button>
+          <button class="tab" data-panel="p-pytest">test_agent.py</button>
+          <button class="tab" data-panel="p-judge">judge.py</button>
+          <button class="tab" data-panel="p-claude">claude_agent.py</button>
         </div>
 
         <div id="p-trace" class="panel active">
-          <div class="window">
-            <div class="window-bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">trace.py</span></div>
-<pre><code class="language-python">from agentlens import Tracer, detect_loops
+          <div class="window"><pre><code class="language-python">from agentlens import Tracer, detect_loops
 from agentlens.report import generate_html
 
 tracer = Tracer("my-agent")
@@ -184,14 +147,11 @@ while not done:                          # your loop, unchanged
             done = True
 
 generate_html(tracer.trace, warnings=detect_loops(tracer.trace),
-              open_browser=True)</code></pre>
-          </div>
+              open_browser=True)</code></pre></div>
         </div>
 
         <div id="p-eval" class="panel">
-          <div class="window">
-            <div class="window-bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">eval.py</span></div>
-<pre><code class="language-python">from agentlens import Eval, Case, metrics
+          <div class="window"><pre><code class="language-python">from agentlens import Eval, Case, metrics
 
 report = Eval("support-agent", my_agent).run([
     Case("weather in NYC",
@@ -201,14 +161,11 @@ report = Eval("support-agent", my_agent).run([
 ])
 
 report.summary()                 # -> 2/2 cases passed (100%)
-report.assert_passed(min_pass_rate=0.9)   # gate CI</code></pre>
-          </div>
+report.assert_passed(min_pass_rate=0.9)   # gate CI</code></pre></div>
         </div>
 
         <div id="p-pytest" class="panel">
-          <div class="window">
-            <div class="window-bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">test_agent.py</span></div>
-<pre><code class="language-python">from agentlens import Case, metrics
+          <div class="window"><pre><code class="language-python">from agentlens import Case, metrics
 from agentlens.testing import parametrize, check
 
 DATASET = [
@@ -222,14 +179,11 @@ def test_agent(case):
 
 # $ pytest -v
 # test_agent[weather] PASSED
-# test_agent[cancel]  PASSED</code></pre>
-          </div>
+# test_agent[cancel]  PASSED</code></pre></div>
         </div>
 
         <div id="p-judge" class="panel">
-          <div class="window">
-            <div class="window-bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">judge.py</span></div>
-<pre><code class="language-python">from agentlens import Eval, Case, metrics
+          <div class="window"><pre><code class="language-python">from agentlens import Eval, Case, metrics
 
 # deterministic checks stay cheap; the judge is opt-in
 report = Eval("support-agent", my_agent).run([
@@ -240,14 +194,11 @@ report = Eval("support-agent", my_agent).run([
         ),
     ]),
 ])
-report.summary()</code></pre>
-          </div>
+report.summary()</code></pre></div>
         </div>
 
         <div id="p-claude" class="panel">
-          <div class="window">
-            <div class="window-bar"><span class="dots"><i></i><i></i><i></i></span><span class="fname">claude_agent.py</span></div>
-<pre><code class="language-python">import anthropic
+          <div class="window"><pre><code class="language-python">import anthropic
 from agentlens import Tracer
 from agentlens.report import generate_html
 
@@ -266,35 +217,8 @@ while True:
             break
         # ... record step.tool_call(...) and feed results back
 
-generate_html(tracer.trace, open_browser=True)</code></pre>
-          </div>
+generate_html(tracer.trace, open_browser=True)</code></pre></div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- LENSES -->
-  <section style="padding-top:30px">
-    <div class="wrap lenses">
-      <div>
-        <h2>It watches. It doesn't drive.</h2>
-        <p>agentlens is a notebook sitting next to your loop. Every turn, you jot down what the agent did. Your logic is untouched — delete the agentlens lines and the agent still runs.</p>
-        <p>Because every lens reads the same <code>Trace</code>, adding a feature never means rewriting your integration.</p>
-        <a class="btn btn-ghost" href="docs.html">Read the docs →</a>
-      </div>
-      <div class="diagram">
-<span class="muted">      YOUR CODE</span>                  <span class="muted">AGENTLENS</span>
-  ┌────────────────────┐
-  │  while not done:    │
-  │    ask model   ─────┼──▶ <span class="hl">with tracer.step()</span>
-  │    run tool    ─────┼──▶   <span class="hl">step.tool_call(...)</span>
-  │    loop again       │
-  └─────────┬──────────┘
-            │
-            ▼
-   <span class="hl2">generate_html(trace)</span> ──▶ <span class="g">report.html</span>
-   <span class="hl2">detect_loops(trace)</span>  ──▶ <span class="g">⚠ loop found</span>
-   <span class="hl2">Eval(...).run(...)</span>   ──▶ <span class="g">pass_rate</span>
       </div>
     </div>
   </section>
@@ -302,87 +226,65 @@ generate_html(tracer.trace, open_browser=True)</code></pre>
   <!-- WHY -->
   <section id="why">
     <div class="wrap">
-      <div class="section-head">
-        <div class="eyebrow">Where it fits</div>
-        <h2>Built for the dev loop, not a dashboard</h2>
-        <p>Most agent tools assume a hosted backend and grade only the final answer. agentlens is the opposite.</p>
-      </div>
+      <div class="sec-head"><span class="hash">#</span> <span class="label">why</span> <span class="rule"></span></div>
+      <p class="sec-sub"># built for the dev loop, not a dashboard</p>
       <div class="table-wrap">
         <table class="cmp">
-          <thead>
-            <tr><th>&nbsp;</th><th>agentlens</th><th>typical platform</th></tr>
-          </thead>
+          <thead><tr><th># comparison</th><th>agentlens</th><th>typical platform</th></tr></thead>
           <tbody>
-            <tr><td>Runs locally, no backend</td><td class="yes">✓ stdlib-only</td><td class="no">needs Postgres / cloud</td></tr>
-            <tr><td>Understands the whole run</td><td class="yes">✓ step + tool level</td><td class="no">often final answer only</td></tr>
-            <tr><td>Cheap &amp; deterministic by default</td><td class="yes">✓ judge is opt-in</td><td class="no">LLM-judge everywhere</td></tr>
-            <tr><td>Catches stuck loops</td><td class="yes">✓ built in</td><td class="no">manual</td></tr>
-            <tr><td>Adoption cost</td><td class="yes">✓ a few lines</td><td class="no">account + SDK + config</td></tr>
+            <tr><td>runs locally, no backend</td><td class="yes">True  # stdlib-only</td><td class="no">needs Postgres / cloud</td></tr>
+            <tr><td>understands the whole run</td><td class="yes">True  # step + tool</td><td class="no">often final answer only</td></tr>
+            <tr><td>cheap &amp; deterministic by default</td><td class="yes">True  # judge opt-in</td><td class="no">LLM-judge everywhere</td></tr>
+            <tr><td>catches stuck loops</td><td class="yes">True  # built in</td><td class="no">manual</td></tr>
+            <tr><td>adoption cost</td><td class="yes">~5 lines</td><td class="no">account + SDK + config</td></tr>
           </tbody>
         </table>
       </div>
     </div>
   </section>
 
-  <!-- FREE & OPEN SOURCE -->
-  <section class="oss">
-    <div class="wrap">
-      <div class="card">
-        <h2>Free &amp; open source</h2>
-        <p>The core is stdlib-only and MIT-licensed. Nothing to host, no account, no telemetry. Your traces stay on your machine.</p>
-        <div class="badges">
-          <span class="badge2"><b>MIT</b> licensed</span>
-          <span class="badge2"><b>0</b> dependencies</span>
-          <span class="badge2"><b>no</b> backend</span>
-          <span class="badge2"><b>Python</b> 3.10+</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- CHANGELOG -->
-  <section style="padding-top:30px">
-    <div class="wrap">
-      <div class="section-head">
-        <div class="eyebrow">Moving fast</div>
-        <h2>Changelog</h2>
-        <p>Built in the open. Recent releases:</p>
-      </div>
-      <div class="changelog-list">
-        <div class="rel">
-          <span class="tag">v0.3</span>
-          <span class="what"><b>LLM-as-judge.</b> Opt-in <code style="font-family:var(--mono)">LLMJudge("criteria")</code> grades open-ended output with Claude via structured outputs — the only metric that costs tokens.</span>
-        </div>
-        <div class="rel">
-          <span class="tag">v0.2</span>
-          <span class="what"><b>Eval layer + CI.</b> Deterministic metrics, an <code style="font-family:var(--mono)">Eval</code>/<code style="font-family:var(--mono)">Case</code> runner with <code style="font-family:var(--mono)">pass_rate</code>, pytest integration (one row per case), and an HTML eval report.</span>
-        </div>
-        <div class="rel">
-          <span class="tag">v0.1</span>
-          <span class="what"><b>Observability core.</b> Step tracing, loop detection, and a self-contained HTML trace report. Stdlib-only.</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
   <section>
     <div class="wrap">
-      <div class="cta">
-        <h2>Trace your first agent in 5 minutes</h2>
-        <p>No account. No backend. Just <code>pip install</code> and a few lines.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="docs.html#quickstart">Get started →</a>
-          <a class="btn btn-ghost" href="https://github.com/your-org/agentlens" target="_blank" rel="noopener">Star on GitHub ↗</a>
+      <div class="sec-head"><span class="hash">#</span> <span class="label">changelog</span> <span class="rule"></span></div>
+      <p class="sec-sub"># built in the open · git log --oneline</p>
+      <div class="changelog-list">
+        <div class="rel"><span class="tag">0.3</span><span class="what"><b>LLM-as-judge.</b> Opt-in <code>LLMJudge("criteria")</code> grades open-ended output via Claude structured outputs.</span></div>
+        <div class="rel"><span class="tag">0.2</span><span class="what"><b>Eval layer + CI.</b> Deterministic metrics, an <code>Eval</code>/<code>Case</code> runner with <code>pass_rate</code>, pytest rows, HTML eval report.</span></div>
+        <div class="rel"><span class="tag">0.1</span><span class="what"><b>Observability core.</b> Step tracing, loop detection, self-contained HTML trace report. Stdlib-only.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OSS + CTA -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head"><span class="hash">#</span> <span class="label">install</span> <span class="rule"></span></div>
+      <div class="term cta-term">
+        <div class="term-bar"><span class="dots"><i></i><i></i><i></i></span><span class="ttl">bash — your machine</span></div>
+        <div class="term-body">
+          <div><span class="pr">$</span> pip install agentlens</div>
+          <div class="out">Successfully installed agentlens-0.3.0  # 0 dependencies</div>
+          <div><span class="pr">$</span> python -c "import agentlens"<span class="cursor"></span></div>
         </div>
+      </div>
+      <div class="badges">
+        <span class="badge2"><b>MIT</b> licensed</span>
+        <span class="badge2"><b>0</b> dependencies</span>
+        <span class="badge2"><b>no</b> backend</span>
+        <span class="badge2"><b>py</b> 3.10+</span>
+      </div>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="docs.html#quickstart">get_started()</a>
+        <a class="btn btn-ghost" href="https://github.com/your-org/agentlens" target="_blank" rel="noopener">star_on_github()</a>
       </div>
     </div>
   </section>
 
   <footer>
     <div class="wrap foot">
-      <span class="brand"><span class="logo">🔎</span> agentlens</span>
-      <span>Local-first observability + evals for AI agents · MIT</span>
+      <span class="brand"><span class="logo">🔎</span> agentlens <span class="prmpt">~$</span></span>
+      <span># local-first observability + evals for AI agents · MIT</span>
     </div>
   </footer>
 
