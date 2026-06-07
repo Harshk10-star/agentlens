@@ -16,10 +16,11 @@ opposite of flaky. An optional LLM-as-judge metric can be layered on later.
 
 from __future__ import annotations
 
+import json
 import re
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Optional
 
 from .trace import Trace
 from .detectors import detect_loops
@@ -159,3 +160,101 @@ class NoLoops(Metric):
     def check(self, trace: Trace) -> MetricResult:
         warnings = detect_loops(trace)
         return self._result(not warnings, "" if not warnings else warnings[0].message)
+
+
+# --- LLM-as-judge (opt-in; the only metric that costs tokens) -------------
+def _transcript(trace: Trace) -> str:
+    """A compact text view of the run, for the judge to read."""
+    lines = []
+    for s in trace.steps:
+        if s.thought:
+            lines.append(f"Step {s.index} thought: {s.thought}")
+        if s.tool:
+            lines.append(f"Step {s.index} called {s.tool}({json.dumps(s.args, default=str)}) "
+                         f"-> {s.result!r}")
+        elif s.result is not None:
+            lines.append(f"Step {s.index} result: {s.result!r}")
+    return "\n".join(lines) or "(no steps recorded)"
+
+
+class LLMJudge(Metric):
+    """Grade the agent's output against `criteria` using a Claude model.
+
+    This is the one metric that makes an API call — keep it opt-in so the rest of
+    your suite stays cheap and deterministic. The judge returns a strict
+    pass/fail plus a short reason (via structured outputs).
+
+        metrics.LLMJudge("The reply is polite and correctly states the refund policy")
+
+    Pass your own `client` (anything with `.messages.create(...)`) for testing or
+    to reuse a configured Anthropic client; otherwise one is created lazily.
+    Set `include_transcript=True` to let the judge also see the agent's steps
+    (useful for judging behaviour, not just the final answer).
+    """
+
+    def __init__(
+        self,
+        criteria: str,
+        *,
+        model: str = "claude-opus-4-8",
+        client: Any = None,
+        include_transcript: bool = False,
+        max_tokens: int = 1024,
+    ) -> None:
+        self.criteria = criteria
+        self.model = model
+        self.client = client
+        self.include_transcript = include_transcript
+        self.max_tokens = max_tokens
+
+    def __str__(self) -> str:
+        crit = self.criteria if len(self.criteria) <= 60 else self.criteria[:57] + "..."
+        return f'LLMJudge("{crit}")'
+
+    def _get_client(self) -> Any:
+        if self.client is not None:
+            return self.client
+        import anthropic  # lazy: only needed when a judge actually runs
+        self.client = anthropic.Anthropic()
+        return self.client
+
+    def check(self, trace: Trace) -> MetricResult:
+        prompt = (
+            "You are grading the output of an AI agent. Judge strictly and only "
+            "against the stated criteria.\n\n"
+            f"Criteria:\n{self.criteria}\n\n"
+            f"Agent's final output:\n{trace.final_output!r}\n"
+        )
+        if self.include_transcript:
+            prompt += f"\nFull run transcript:\n{_transcript(trace)}\n"
+        prompt += ('\nReturn JSON: {"passed": <true|false>, "reason": '
+                   "<one short sentence>}.")
+
+        try:
+            resp = self._get_client().messages.create(
+                model=self.model,
+                max_tokens=self.max_tokens,
+                output_config={
+                    "format": {
+                        "type": "json_schema",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "passed": {"type": "boolean"},
+                                "reason": {"type": "string"},
+                            },
+                            "required": ["passed", "reason"],
+                            "additionalProperties": False,
+                        },
+                    }
+                },
+                messages=[{"role": "user", "content": prompt}],
+            )
+            text = next(b.text for b in resp.content if b.type == "text")
+            verdict = json.loads(text)
+        except Exception as exc:  # a judge failure shouldn't crash the whole run
+            return self._result(False, f"judge error: {type(exc).__name__}: {exc}")
+
+        passed = bool(verdict.get("passed"))
+        reason = str(verdict.get("reason", ""))
+        return self._result(passed, reason if not passed else "")

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "agentlens"
-version = "0.1.0"
+version = "0.3.0"
 description = "Local-first observability + eval for AI agents: trace runs, detect loops, render an HTML report. No backend."
 readme = "README.md"
 requires-python = ">=3.10"

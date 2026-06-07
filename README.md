@@ -44,7 +44,7 @@ Or just run the demo:
 python example.py   # writes report.html
 ```
 
-## What's in the box (v0.2)
+## What's in the box (v0.3)
 
 - **Tracing** — `Tracer` / `Step` / `Trace`; latency timed automatically.
 - **Loop detection** — consecutive and frequent repeated tool calls.
@@ -53,6 +53,9 @@ python example.py   # writes report.html
   `ToolWasCalled`, `MaxSteps`, `MaxTokens`, `NoErrors`, `NoLoops`) plus an
   `Eval` / `Case` runner that produces a `pass_rate` you can gate CI on, and an
   HTML eval report with per-case pass/fail.
+- **LLM-as-judge** — opt-in `LLMJudge("criteria")` for grading open-ended outputs
+  with Claude. It's the only metric that costs tokens, so the rest of your suite
+  stays cheap and deterministic.
 
 ```python
 from agentlens import Eval, Case, metrics
@@ -91,11 +94,11 @@ Or gate a whole run: `Eval(...).run(dataset).assert_passed(min_pass_rate=0.9)`.
 
 The whole design is layers over the same `Trace`:
 
-- **LLM-as-judge** — opt-in `LLMJudge` metric for open-ended outputs.
 - **More agent checks** — premature termination, plan drift, expected-trajectory match.
-- **Dev UX** — `pytest` integration, JSON export + run-to-run diff, framework
-  adapters (raw callable, Anthropic, OpenAI, LangChain), `agentlens.wrap(client)`
-  one-line auto-capture.
+- **Dev UX** — JSON export + run-to-run regression diff, framework adapters (raw
+  callable, Anthropic, OpenAI, LangChain), `agentlens.wrap(client)` one-line
+  auto-capture.
+- **Packaging** — publish to PyPI so `pip install agentlens` works for everyone.
 
 ## License
 
