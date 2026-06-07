@@ -9,6 +9,9 @@ The core is **stdlib-only**.
 
 > Working name. Easy to rename.
 
+**Site:** a static landing page + docs live in [`site/`](site/) — open
+`site/index.html` in a browser (no build step).
+
 ## Why
 
 Most agent tools either (a) only score the final answer, missing mistakes that
