@@ -66,6 +66,27 @@ assert report.pass_rate == 1.0   # CI gate
 
 See `example_eval.py` for a full dataset.
 
+### pytest integration
+
+Run your evals as normal tests — one pass/fail row per case:
+
+```python
+from agentlens import Case, metrics
+from agentlens.testing import parametrize, check
+
+DATASET = [Case("weather in NYC", [metrics.Contains("72")], name="weather")]
+
+@parametrize(DATASET)
+def test_agent(case):
+    check(my_agent, case).assert_passed()
+```
+
+```bash
+pytest -v        # tests/test_agent_eval.py::test_agent[weather] PASSED
+```
+
+Or gate a whole run: `Eval(...).run(dataset).assert_passed(min_pass_rate=0.9)`.
+
 ## Roadmap
 
 The whole design is layers over the same `Trace`:

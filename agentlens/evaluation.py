@@ -57,6 +57,17 @@ class CaseResult:
     def passed(self) -> bool:
         return self.error is None and all(r.passed for r in self.results)
 
+    def failure_message(self) -> str:
+        """One-line explanation of why this case failed (empty if it passed)."""
+        if self.error:
+            return f"agent errored: {self.error}"
+        fails = [f"{r.metric}: {r.detail}" for r in self.results if not r.passed]
+        return "; ".join(fails)
+
+    def assert_passed(self) -> None:
+        """Raise AssertionError with a useful message if this case failed."""
+        assert self.passed, self.failure_message()
+
 
 @dataclass
 class Report:
@@ -76,6 +87,21 @@ class Report:
     @property
     def pass_rate(self) -> float:
         return self.passed / self.total if self.total else 0.0
+
+    def assert_passed(self, min_pass_rate: float = 1.0) -> None:
+        """Raise AssertionError (listing failures) if pass_rate < min_pass_rate.
+
+        Use this to gate CI:  Eval(...).run(dataset).assert_passed()
+        or with a threshold:  report.assert_passed(min_pass_rate=0.9)
+        """
+        if self.pass_rate >= min_pass_rate:
+            return
+        lines = [f"{self.name}: {self.passed}/{self.total} cases passed "
+                 f"({self.pass_rate:.0%}), required {min_pass_rate:.0%}"]
+        for i, cr in enumerate(self.case_results):
+            if not cr.passed:
+                lines.append(f"  FAIL {cr.case.label(i)}: {cr.failure_message()}")
+        raise AssertionError("\n".join(lines))
 
     def summary(self) -> None:
         """Print a human-readable summary to stdout."""
