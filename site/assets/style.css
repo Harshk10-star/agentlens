@@ -43,6 +43,27 @@ body {
   background-size: 44px 44px;
   background-position: -1px -1px;
 }
+
+/* ---------- animated background (blurred drifting aurora) ---------- */
+.bgfx { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.bgfx span { position: absolute; border-radius: 50%; filter: blur(90px); opacity: .20;
+             will-change: transform; mix-blend-mode: screen; }
+.bgfx .b1 { width: 560px; height: 560px; top: -160px; left: -100px;
+            background: radial-gradient(circle, var(--green), transparent 62%);
+            animation: drift1 28s ease-in-out infinite; }
+.bgfx .b2 { width: 520px; height: 520px; top: 26%; right: -160px;
+            background: radial-gradient(circle, var(--blue), transparent 62%);
+            animation: drift2 34s ease-in-out infinite; }
+.bgfx .b3 { width: 480px; height: 480px; bottom: -180px; left: 32%;
+            background: radial-gradient(circle, var(--cyan), transparent 62%);
+            animation: drift3 40s ease-in-out infinite; }
+@keyframes drift1 { 0%,100% { transform: translate(0,0) scale(1); }
+                    50% { transform: translate(140px, 90px) scale(1.12); } }
+@keyframes drift2 { 0%,100% { transform: translate(0,0) scale(1); }
+                    50% { transform: translate(-120px, 70px) scale(1.1); } }
+@keyframes drift3 { 0%,100% { transform: translate(0,0) scale(1); }
+                    50% { transform: translate(80px, -110px) scale(1.15); } }
+@media (prefers-reduced-motion: reduce) { .bgfx span { animation: none; } }
 a { color: var(--link); text-decoration: none; }
 a:hover { text-decoration: underline; }
 .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
