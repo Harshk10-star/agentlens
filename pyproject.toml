@@ -18,3 +18,9 @@ dev = ["pytest>=8"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["agentlens"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "live: tests that make real LLM API calls (need ANTHROPIC_API_KEY; opt in with -m live)",
+]
