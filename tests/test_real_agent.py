@@ -21,8 +21,8 @@ import os
 
 import pytest
 
-from agentlens import Case, Tracer, metrics
-from agentlens.testing import check, parametrize
+from agentlens_eval import Case, Tracer, metrics
+from agentlens_eval.testing import check, parametrize
 
 # Skip the whole module unless a key is present AND the SDK is installed.
 pytestmark = [

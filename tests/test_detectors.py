@@ -4,7 +4,7 @@ Covers both shapes the detector flags — back-to-back ("consecutive") and
 repeated-anywhere ("frequent") — plus threshold tuning and the clean case.
 """
 
-from agentlens import Tracer, detect_loops
+from agentlens_eval import Tracer, detect_loops
 
 
 def _trace(*calls):

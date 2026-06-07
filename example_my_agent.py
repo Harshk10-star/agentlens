@@ -15,8 +15,8 @@ calling the same tool, exactly like a real one can.
 The only agentlens lines are marked with  # <-- agentlens
 """
 
-from agentlens import Tracer, detect_loops          # <-- agentlens
-from agentlens.report import generate_html           # <-- agentlens
+from agentlens_eval import Tracer, detect_loops          # <-- agentlens
+from agentlens_eval.report import generate_html           # <-- agentlens
 
 
 # ----------------------------------------------------------------------

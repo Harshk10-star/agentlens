@@ -1,5 +1,5 @@
 # Presence of this file at the repo root puts the root on sys.path,
-# so `import agentlens` works in tests without installing the package.
+# so `import agentlens_eval` works in tests without installing the package.
 
 # Also load a local `.env` (if present) so the opt-in live agent tests can read
 # ANTHROPIC_API_KEY without exporting it in the shell. Stdlib-only — we don't

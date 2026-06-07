@@ -54,7 +54,7 @@
 
       <div class="hero-actions">
         <div class="install">
-          <span class="prompt">$</span><code id="install-cmd">pip install agentlens</code>
+          <span class="prompt">$</span><code id="install-cmd">pip install agentlens-eval</code>
           <button class="copy-btn" data-copy="#install-cmd">copy</button>
         </div>
         <a class="btn btn-primary" href="docs.html#quickstart">get_started()</a>
@@ -75,7 +75,7 @@
 <span class="ln"><span class="t-s">no backend · no account · stdlib-only.</span></span>
 <span class="ln"><span class="t-s">"""</span></span>
 <span class="ln blank"></span>
-<span class="ln"><span class="t-k">from</span> agentlens <span class="t-k">import</span> <span class="t-b">Tracer</span>, <span class="t-b">Eval</span>, <span class="t-b">metrics</span></span>
+<span class="ln"><span class="t-k">from</span> agentlens_eval <span class="t-k">import</span> <span class="t-b">Tracer</span>, <span class="t-b">Eval</span>, <span class="t-b">metrics</span></span>
 <span class="ln blank"></span>
 <span class="ln">tracer <span class="t-k">=</span> <span class="t-f">Tracer</span>(<span class="t-s">"my-agent"</span>)            <span class="t-c"># one Trace, many lenses</span></span>
 <span class="ln">report <span class="t-k">=</span> <span class="t-f">Eval</span>(<span class="t-s">"my-agent"</span>, agent).<span class="t-f">run</span>(dataset)  <span class="t-c"># → pass_rate</span></span>
@@ -209,8 +209,8 @@
         </div>
 
         <div id="p-trace" class="panel active">
-          <div class="window"><pre><code class="language-python">from agentlens import Tracer, detect_loops
-from agentlens.report import generate_html
+          <div class="window"><pre><code class="language-python">from agentlens_eval import Tracer, detect_loops
+from agentlens_eval.report import generate_html
 
 tracer = Tracer("my-agent")
 
@@ -229,7 +229,7 @@ generate_html(tracer.trace, warnings=detect_loops(tracer.trace),
         </div>
 
         <div id="p-eval" class="panel">
-          <div class="window"><pre><code class="language-python">from agentlens import Eval, Case, metrics
+          <div class="window"><pre><code class="language-python">from agentlens_eval import Eval, Case, metrics
 
 report = Eval("support-agent", my_agent).run([
     Case("weather in NYC",
@@ -243,8 +243,8 @@ report.assert_passed(min_pass_rate=0.9)   # gate CI</code></pre></div>
         </div>
 
         <div id="p-pytest" class="panel">
-          <div class="window"><pre><code class="language-python">from agentlens import Case, metrics
-from agentlens.testing import parametrize, check
+          <div class="window"><pre><code class="language-python">from agentlens_eval import Case, metrics
+from agentlens_eval.testing import parametrize, check
 
 DATASET = [
     Case("weather in NYC", [metrics.Contains("72")], name="weather"),
@@ -261,7 +261,7 @@ def test_agent(case):
         </div>
 
         <div id="p-judge" class="panel">
-          <div class="window"><pre><code class="language-python">from agentlens import Eval, Case, metrics
+          <div class="window"><pre><code class="language-python">from agentlens_eval import Eval, Case, metrics
 
 # deterministic checks stay cheap; the judge is opt-in
 report = Eval("support-agent", my_agent).run([
@@ -277,8 +277,8 @@ report.summary()</code></pre></div>
 
         <div id="p-claude" class="panel">
           <div class="window"><pre><code class="language-python">import anthropic
-from agentlens import Tracer
-from agentlens.report import generate_html
+from agentlens_eval import Tracer
+from agentlens_eval.report import generate_html
 
 client = anthropic.Anthropic()
 tracer = Tracer("weather-agent")
@@ -341,9 +341,9 @@ generate_html(tracer.trace, open_browser=True)</code></pre></div>
       <div class="term cta-term">
         <div class="term-bar"><span class="ttl">bash — your machine</span></div>
         <div class="term-body">
-          <div><span class="pr">$</span> pip install agentlens</div>
-          <div class="out">Successfully installed agentlens-0.3.0  # 0 dependencies</div>
-          <div><span class="pr">$</span> python -c "import agentlens"<span class="cursor"></span></div>
+          <div><span class="pr">$</span> pip install agentlens-eval</div>
+          <div class="out">Successfully installed agentlens-eval-0.3.0  # 0 dependencies</div>
+          <div><span class="pr">$</span> python -c "import agentlens_eval"<span class="cursor"></span></div>
         </div>
       </div>
       <div class="badges">

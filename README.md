@@ -28,8 +28,8 @@ pip install -e .
 ## Quick start
 
 ```python
-from agentlens import Tracer, detect_loops
-from agentlens.report import generate_html
+from agentlens_eval import Tracer, detect_loops
+from agentlens_eval.report import generate_html
 
 tracer = Tracer("my-agent")
 
@@ -61,7 +61,7 @@ python example.py   # writes report.html
   stays cheap and deterministic.
 
 ```python
-from agentlens import Eval, Case, metrics
+from agentlens_eval import Eval, Case, metrics
 
 report = Eval("my-agent", my_agent).run([
     Case("weather in NYC", [metrics.Contains("72"), metrics.ToolWasCalled("get_weather")]),
@@ -77,8 +77,8 @@ See `example_eval.py` for a full dataset.
 Run your evals as normal tests — one pass/fail row per case:
 
 ```python
-from agentlens import Case, metrics
-from agentlens.testing import parametrize, check
+from agentlens_eval import Case, metrics
+from agentlens_eval.testing import parametrize, check
 
 DATASET = [Case("weather in NYC", [metrics.Contains("72")], name="weather")]
 
@@ -101,7 +101,9 @@ The whole design is layers over the same `Trace`:
 - **Dev UX** — JSON export + run-to-run regression diff, framework adapters (raw
   callable, Anthropic, OpenAI, LangChain), `agentlens.wrap(client)` one-line
   auto-capture.
-- **Packaging** — publish to PyPI so `pip install agentlens` works for everyone.
+- **Packaging** — publish to PyPI as `pip install agentlens-eval` (the bare
+  `agentlens` name is taken, so the distribution is `agentlens-eval` while the
+  import stays `agentlens_eval`).
 
 ## License
 

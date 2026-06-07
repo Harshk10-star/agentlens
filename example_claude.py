@@ -20,8 +20,8 @@ from __future__ import annotations
 import os
 import sys
 
-from agentlens import Tracer, detect_loops          # <-- agentlens
-from agentlens.report import generate_html           # <-- agentlens
+from agentlens_eval import Tracer, detect_loops          # <-- agentlens
+from agentlens_eval.report import generate_html           # <-- agentlens
 
 
 # ----------------------------------------------------------------------

@@ -1,5 +1,5 @@
-from agentlens import Case, Eval, Tracer, detect_loops, metrics
-from agentlens.report import generate_eval_html, generate_html
+from agentlens_eval import Case, Eval, Tracer, detect_loops, metrics
+from agentlens_eval.report import generate_eval_html, generate_html
 
 
 def _search_agent(question: str):

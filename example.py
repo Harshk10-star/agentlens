@@ -8,8 +8,8 @@ report. Run it:
 It writes report.html next to this file. Open it in your browser.
 """
 
-from agentlens import Tracer, detect_loops
-from agentlens.report import generate_html
+from agentlens_eval import Tracer, detect_loops
+from agentlens_eval.report import generate_html
 
 
 def main() -> None:

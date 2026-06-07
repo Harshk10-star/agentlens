@@ -4,8 +4,8 @@ Each Case becomes its own test row. This file is self-contained (a fake agent)
 so it passes out of the box; swap in your real agent to use it for real.
 """
 
-from agentlens import Tracer, Case, metrics
-from agentlens.testing import parametrize, check
+from agentlens_eval import Tracer, Case, metrics
+from agentlens_eval.testing import parametrize, check
 
 
 # --- the agent under test (fake model, no API key needed) ----------------

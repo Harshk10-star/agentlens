@@ -6,7 +6,7 @@ failing trace, and we assert the failure `detail` is populated (it's what shows
 up in the report when a case fails).
 """
 
-from agentlens import Tracer, metrics
+from agentlens_eval import Tracer, metrics
 
 
 def _answer(text, *, tokens=0):

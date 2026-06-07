@@ -7,7 +7,7 @@ returns a canned verdict. This proves the metric's logic without hitting the API
 import json
 from types import SimpleNamespace
 
-from agentlens import Tracer, metrics
+from agentlens_eval import Tracer, metrics
 
 
 def _fake_client(verdict: dict):

@@ -68,7 +68,7 @@
         <h2 id="install">Installation</h2>
         <p>Requires Python 3.10+. The core has <b>no dependencies</b>.</p>
         <div class="install" style="margin-top:12px">
-          <span class="prompt">$</span><code id="i1">pip install agentlens</code>
+          <span class="prompt">$</span><code id="i1">pip install agentlens-eval</code>
           <button class="copy-btn" data-copy="#i1">copy</button>
         </div>
         <p>The <code>LLMJudge</code> metric additionally needs the Anthropic SDK, only when you use it:</p>
@@ -79,8 +79,8 @@
 
         <h2 id="quickstart">Quickstart</h2>
         <p>Wrap each turn of your agent loop in <code>tracer.step()</code>, then render a report:</p>
-<pre><code class="language-python">from agentlens import Tracer, detect_loops
-from agentlens.report import generate_html
+<pre><code class="language-python">from agentlens_eval import Tracer, detect_loops
+from agentlens_eval.report import generate_html
 
 tracer = Tracer("my-agent")
 
@@ -123,7 +123,7 @@ while not done:
           <li><b>consecutive</b> — the same <code>(tool, args)</code> back-to-back (severity <code>error</code>)</li>
           <li><b>frequent</b> — the same <code>(tool, args)</code> 3+ times anywhere (severity <code>warning</code>)</li>
         </ul>
-<pre><code class="language-python">from agentlens import detect_loops
+<pre><code class="language-python">from agentlens_eval import detect_loops
 
 for w in detect_loops(tracer.trace):
     print(w.severity, w.message)
@@ -132,7 +132,7 @@ for w in detect_loops(tracer.trace):
 
         <h2 id="reports">HTML reports</h2>
         <p>Render a single trace, or a whole eval run, to a self-contained HTML file (inline CSS, no assets):</p>
-<pre><code class="language-python">from agentlens.report import generate_html, generate_eval_html
+<pre><code class="language-python">from agentlens_eval.report import generate_html, generate_eval_html
 
 generate_html(trace, "report.html", open_browser=True)        # one run
 generate_eval_html(report, "eval_report.html", open_browser=True)  # a dataset</code></pre>
@@ -156,7 +156,7 @@ generate_eval_html(report, "eval_report.html", open_browser=True)  # a dataset</
             </tbody>
           </table>
         </div>
-<pre><code class="language-python">from agentlens import metrics
+<pre><code class="language-python">from agentlens_eval import metrics
 
 checks = [
     metrics.Contains("72"),
@@ -167,7 +167,7 @@ checks = [
 
         <h2 id="evals">Evals &amp; datasets</h2>
         <p>An <b>agent</b> for eval is any callable that takes a case input and returns a <code>Trace</code> (run a <code>Tracer</code> inside, return <code>tracer.trace</code>). A <b>Case</b> pairs an input with the metrics it must pass.</p>
-<pre><code class="language-python">from agentlens import Tracer, Eval, Case, metrics
+<pre><code class="language-python">from agentlens_eval import Tracer, Eval, Case, metrics
 
 def my_agent(question: str):
     tracer = Tracer("support-agent")
@@ -191,8 +191,8 @@ print(report.pass_rate)                # 1.0</code></pre>
 
         <h2 id="pytest">pytest &amp; CI</h2>
         <p>Turn a dataset into one pytest row per case with <code>parametrize</code>, and assert with <code>check</code>:</p>
-<pre><code class="language-python">from agentlens import Case, metrics
-from agentlens.testing import parametrize, check
+<pre><code class="language-python">from agentlens_eval import Case, metrics
+from agentlens_eval.testing import parametrize, check
 
 DATASET = [
     Case("weather in NYC", [metrics.Contains("72")], name="weather"),
@@ -208,7 +208,7 @@ def test_agent(case):
 
         <h2 id="judge">LLM-as-judge</h2>
         <p>For open-ended output where assertions fall short, <code>LLMJudge</code> grades against criteria with Claude. It's the only metric that costs tokens, so keep it opt-in alongside cheap checks.</p>
-<pre><code class="language-python">from agentlens import metrics
+<pre><code class="language-python">from agentlens_eval import metrics
 
 metrics.LLMJudge("politely and correctly states the 30-day refund policy")
 

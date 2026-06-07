@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "agentlens"
+name = "agentlens-eval"
 version = "0.3.0"
 description = "Local-first observability + eval for AI agents: trace runs, detect loops, render an HTML report. No backend."
 readme = "README.md"
@@ -11,13 +11,30 @@ requires-python = ">=3.10"
 license = { text = "MIT" }
 authors = [{ name = "harsh" }]
 keywords = ["ai", "agents", "llm", "eval", "observability", "tracing"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Software Development :: Testing",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
 dependencies = []  # stdlib-only core — that's the point
+
+[project.urls]
+Homepage = "https://github.com/Harshk10-star/agentlens"
+Repository = "https://github.com/Harshk10-star/agentlens"
+Issues = "https://github.com/Harshk10-star/agentlens/issues"
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["agentlens"]
+packages = ["agentlens_eval"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -11,8 +11,8 @@ Run it:
 Then open eval_report.html.
 """
 
-from agentlens import Tracer, Eval, Case, metrics
-from agentlens.report import generate_eval_html
+from agentlens_eval import Tracer, Eval, Case, metrics
+from agentlens_eval.report import generate_eval_html
 
 
 # ----------------------------------------------------------------------
